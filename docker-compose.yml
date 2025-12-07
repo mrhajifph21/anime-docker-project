@@ -1,0 +1,28 @@
+services:
+  website:
+    build: .
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html
+    networks:
+      - anime-net
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: anime_db
+    volumes:
+      - ./database/anime_db.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/mysql
+    networks:
+      - anime-net
+
+volumes:
+  db_data:
+
+networks:
+  anime-net:
