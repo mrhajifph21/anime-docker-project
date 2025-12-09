@@ -17,7 +17,7 @@ define('JIKAN_RANDOM_ANIME_URL', 'https://api.jikan.moe/v4/random/anime');
 // KONEKSI DATABASE
 $servername = "db";
 $username = "root";
-$password = "root";
+$password = "1234";
 $dbname = "anime_db";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
