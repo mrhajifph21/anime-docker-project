@@ -1,0 +1,58 @@
+version: '3.8'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/myphpapp
+    depends_on:
+      - php
+    networks:
+      - app-network
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /var/www/myphpapp
+    volumes:
+      - .:/var/www/myphpapp
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+      - DB_NAME=anime_db
+      - DB_USER=root
+      - DB_PASSWORD=1234
+    networks:
+      - app-network
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: anime_db
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./anime_db.sql:/docker-entrypoint-initdb.d/anime_db.sql
+    networks:
+      - app-network
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=mysql
+      - MYSQL_ROOT_PASSWORD=1234
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+volumes:
+  mysql_data:
+networks:
+  app-network:
+    driver: bridge
