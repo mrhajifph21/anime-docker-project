@@ -2,7 +2,7 @@ name: CI/CD Auto Pull and Rebuild
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -30,15 +30,15 @@ jobs:
         rm -rf .git
         git init
         git remote add origin https://github.com/Hasryl16/testing-with-pajar.git
-        git fetch origin master
-        git checkout -f master
+        git fetch origin main
+        git checkout -f main
       
 
     - name: Pull latest changes
       working-directory: ${{ env.PROJECT_PATH }}
       run: |
-        git fetch origin master
-        git reset --hard origin/master
+        git fetch origin main
+        git reset --hard origin/main
 
     - name: Stop existing containers
       working-directory: ${{ env.PROJECT_PATH }}
@@ -88,14 +88,14 @@ jobs:
         rm -rf .git
         git init
         git remote add origin https://github.com/mrhajifph21/anime-docker-project.git
-        git fetch origin master
-        git checkout -f master
+        git fetch origin main
+        git checkout -f main
 
     - name: Pull latest changes
       working-directory: ${{ env.PROJECT_PATH }}
       run: |
-        git fetch origin master
-        git reset --hard origin/master
+        git fetch origin main
+        git reset --hard origin/main
 
     - name: Stop existing containers
       working-directory: ${{ env.PROJECT_PATH }}
